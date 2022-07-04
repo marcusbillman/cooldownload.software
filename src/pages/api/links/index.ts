@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../server/db/client';
+import { prisma } from '../../../server/db/client';
 import Randomstring from 'randomstring';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
