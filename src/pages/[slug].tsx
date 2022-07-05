@@ -17,7 +17,10 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
     challengeToRender = CHALLENGES[randomIndex] as string;
   }
 
-  const redirectToTarget = () => {
+  const onComplete = async () => {
+    await fetch(`/api/links/${link.slug}/completed-count`, {
+      method: 'PUT',
+    });
     window.location.href = link.targetUrl;
   };
 
@@ -39,7 +42,7 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
         <div className="container p-10 mx-auto">
           <h1>Please verify that you are human</h1>
           {challengeToRender === 'button' && (
-            <ButtonChallenge onComplete={redirectToTarget}></ButtonChallenge>
+            <ButtonChallenge onComplete={onComplete}></ButtonChallenge>
           )}
         </div>
       </main>
