@@ -13,7 +13,7 @@ datasource db {
 model Link {
     id             String   @id @default(auto()) @map("_id") @db.ObjectId
     targetUrl      String
-    slug           String
+    slug           String   @unique
     challenge      String   @default("random")
     theme          String   @default("default")
     visitedCount   Int      @default(0)
