@@ -3,13 +3,14 @@ import Head from 'next/head';
 import { prisma } from '../server/db/client';
 import type { Link } from '../types';
 import ButtonChallenge from '../components/challenges/ButtonChallenge';
+import WaitChallenge from '../components/challenges/WaitChallenge';
 
 interface Props {
   link: Link;
 }
 
 const ChallengePage: NextPage<Props> = ({ link }) => {
-  const CHALLENGES = ['button'];
+  const CHALLENGES = ['button', 'wait'];
 
   let challengeToRender = link.challenge;
   if (!CHALLENGES.includes(link.challenge)) {
@@ -43,6 +44,9 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
           <h1>Please verify that you are human</h1>
           {challengeToRender === 'button' && (
             <ButtonChallenge onComplete={onComplete}></ButtonChallenge>
+          )}
+          {challengeToRender === 'wait' && (
+            <WaitChallenge onComplete={onComplete}></WaitChallenge>
           )}
         </div>
       </main>
