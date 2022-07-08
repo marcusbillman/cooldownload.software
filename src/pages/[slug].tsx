@@ -4,13 +4,14 @@ import { prisma } from '../server/db/client';
 import type { Link } from '../types';
 import ButtonChallenge from '../components/challenges/ButtonChallenge';
 import WaitChallenge from '../components/challenges/WaitChallenge';
+import ThreeDTextChallenge from '../components/challenges/ThreeDTextChallenge';
 
 interface Props {
   link: Link;
 }
 
 const ChallengePage: NextPage<Props> = ({ link }) => {
-  const CHALLENGES = ['button', 'wait'];
+  const CHALLENGES = ['button', 'wait', '3d-text'];
 
   let challengeToRender = link.challenge;
   if (!CHALLENGES.includes(link.challenge)) {
@@ -47,6 +48,9 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
           )}
           {challengeToRender === 'wait' && (
             <WaitChallenge onComplete={onComplete}></WaitChallenge>
+          )}
+          {challengeToRender === '3d-text' && (
+            <ThreeDTextChallenge onComplete={onComplete}></ThreeDTextChallenge>
           )}
         </div>
       </main>
