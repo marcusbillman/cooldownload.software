@@ -5,13 +5,14 @@ import type { Link } from '../types';
 import ButtonChallenge from '../components/challenges/ButtonChallenge';
 import WaitChallenge from '../components/challenges/WaitChallenge';
 import ThreeDTextChallenge from '../components/challenges/ThreeDTextChallenge';
+import RotateImageChallenge from '../components/challenges/RotateImageChallenge';
 
 interface Props {
   link: Link;
 }
 
 const ChallengePage: NextPage<Props> = ({ link }) => {
-  const CHALLENGES = ['button', 'wait', '3d-text'];
+  const CHALLENGES = ['button', 'wait', '3d-text', 'rotate-image'];
 
   let challengeToRender = link.challenge;
   if (!CHALLENGES.includes(link.challenge)) {
@@ -51,6 +52,11 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
           )}
           {challengeToRender === '3d-text' && (
             <ThreeDTextChallenge onComplete={onComplete}></ThreeDTextChallenge>
+          )}
+          {challengeToRender === 'rotate-image' && (
+            <RotateImageChallenge
+              onComplete={onComplete}
+            ></RotateImageChallenge>
           )}
         </div>
       </main>
