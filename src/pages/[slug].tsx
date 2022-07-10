@@ -6,13 +6,20 @@ import ButtonChallenge from '../components/challenges/ButtonChallenge';
 import WaitChallenge from '../components/challenges/WaitChallenge';
 import ThreeDTextChallenge from '../components/challenges/ThreeDTextChallenge';
 import RotateImageChallenge from '../components/challenges/RotateImageChallenge';
+import SelectSquaresChallenge from '../components/challenges/SelectSquaresChallenge';
 
 interface Props {
   link: Link;
 }
 
 const ChallengePage: NextPage<Props> = ({ link }) => {
-  const CHALLENGES = ['button', 'wait', '3d-text', 'rotate-image'];
+  const CHALLENGES = [
+    'button',
+    'wait',
+    '3d-text',
+    'rotate-image',
+    'select-squares',
+  ];
 
   let challengeToRender = link.challenge;
   if (!CHALLENGES.includes(link.challenge)) {
@@ -57,6 +64,11 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
             <RotateImageChallenge
               onComplete={onComplete}
             ></RotateImageChallenge>
+          )}
+          {challengeToRender === 'select-squares' && (
+            <SelectSquaresChallenge
+              onComplete={onComplete}
+            ></SelectSquaresChallenge>
           )}
         </div>
       </main>
