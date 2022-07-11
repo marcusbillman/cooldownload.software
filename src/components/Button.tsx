@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import NextLink from 'next/link';
 
 interface Props {
-  href?: URL;
+  href?: string;
   variant?: 'primary' | 'secondary' | 'destructive';
   htmlButtonType?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
@@ -13,6 +13,7 @@ const Button: FC<Props> = ({
   href,
   variant = 'primary',
   htmlButtonType = 'button',
+  onClick,
   children,
 }) => {
   const getVariantClasses = () => {
@@ -29,15 +30,15 @@ const Button: FC<Props> = ({
   return (
     <>
       {href ? (
-        <NextLink
-          href={href}
+        <div
           className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg`}
         >
-          {children}
-        </NextLink>
+          <NextLink href={href}>{children}</NextLink>
+        </div>
       ) : (
         <button
           type={htmlButtonType}
+          onClick={onClick}
           className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg`}
         >
           {children}
