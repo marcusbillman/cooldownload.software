@@ -13,5 +13,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  res.redirect(`/created/${result.slug}`);
+  res.status(201).json(result);
 };
