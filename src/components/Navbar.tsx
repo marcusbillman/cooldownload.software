@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Button from './Button';
 
@@ -8,6 +9,7 @@ interface Props {}
 
 const Navbar: FC<Props> = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -41,8 +43,29 @@ const Navbar: FC<Props> = () => {
               </li>
             </ul>
           </nav>
-          <div className="hidden md:block">
-            <Button variant="secondary">Sign in with Discord</Button>
+          <div className="hidden md:flex items-center gap-8">
+            {session ? (
+              <>
+                <div className="flex items-center gap-2">
+                  {session.user?.image && (
+                    <Image
+                      src={session.user?.image}
+                      alt={`${session.user?.name} avatar`}
+                      width={32}
+                      height={32}
+                    ></Image>
+                  )}
+                  <p className="font-medium">{session.user?.name}</p>
+                </div>
+                <Button variant="secondary" onClick={signOut}>
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Button variant="secondary" onClick={signIn}>
+                Sign in
+              </Button>
+            )}
           </div>
         </div>
       </header>
