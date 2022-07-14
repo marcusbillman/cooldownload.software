@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import { Link } from '@prisma/client';
@@ -117,7 +117,21 @@ const HomePage: NextPage = () => {
                   </select>
                 </div>
               </div>
-              <Button htmlButtonType="submit">Create sketchy link</Button>
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-200 w-12 h-12 rounded-full"></div>
+                <div>
+                  <p className="font-medium">Tracking</p>
+                  <p className="text-2xl">{session ? 'Enabled' : 'Disabled'}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <Button htmlButtonType="submit">Create sketchy link</Button>
+                {!session && (
+                  <Button variant="secondary" onClick={signIn}>
+                    Sign in to enable tracking
+                  </Button>
+                )}
+              </div>
             </form>
           </section>
         </div>
