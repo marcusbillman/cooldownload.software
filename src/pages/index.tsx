@@ -1,9 +1,38 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
+import { Link } from '@prisma/client';
 
 const HomePage: NextPage = () => {
+  const [targetUrl, setTargetUrl] = useState('');
+  const [challenge, setChallenge] = useState('random');
+  const [theme, setTheme] = useState('default');
+
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const response = await fetch('/api/links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        targetUrl,
+        challenge,
+        theme,
+        userEmail: session?.user?.email,
+      }),
+    });
+    const link: Link = await response.json();
+    router.push(`/created/${link.slug}`);
+  };
+
   return (
     <>
       <Head>
@@ -32,6 +61,7 @@ const HomePage: NextPage = () => {
               action="/api/links"
               method="post"
               className="flex flex-col gap-8"
+              onSubmit={onSubmit}
             >
               <div>
                 <label htmlFor="targetUrl" className="block font-medium mb-2">
@@ -41,6 +71,8 @@ const HomePage: NextPage = () => {
                   type="text"
                   name="targetUrl"
                   id="targetUrl"
+                  value={targetUrl}
+                  onChange={(e) => setTargetUrl(e.target.value)}
                   placeholder="https://marcusbillman.com"
                   required
                   className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
@@ -57,7 +89,8 @@ const HomePage: NextPage = () => {
                   <select
                     name="challenge"
                     id="challenge"
-                    defaultValue={'random'}
+                    value={challenge}
+                    onChange={(e) => setChallenge(e.target.value)}
                     required
                     className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
                   >
@@ -75,7 +108,8 @@ const HomePage: NextPage = () => {
                   <select
                     name="theme"
                     id="theme"
-                    defaultValue={'default'}
+                    value={theme}
+                    onChange={(e) => setTheme(e.target.value)}
                     required
                     className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
                   >
