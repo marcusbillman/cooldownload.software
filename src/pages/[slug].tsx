@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { prisma } from '../server/db/client';
 import type { Link } from '../types';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import ButtonChallenge from '../components/challenges/ButtonChallenge';
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const ChallengePage: NextPage<Props> = ({ link }) => {
+  const router = useRouter();
+
   const CHALLENGES = [
     'button',
     'wait',
@@ -33,7 +36,7 @@ const ChallengePage: NextPage<Props> = ({ link }) => {
     await fetch(`/api/links/${link.slug}/completed-count`, {
       method: 'PUT',
     });
-    window.location.href = link.targetUrl;
+    router.push(link.targetUrl);
   };
 
   return (
