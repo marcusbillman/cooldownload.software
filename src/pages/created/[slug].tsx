@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { prisma } from '../../server/db/client';
 import type { Link } from '@prisma/client';
 import NextLink from 'next/link';
+import toast from 'react-hot-toast';
 import Button from '../../components/Button';
 import Navbar from '../../components/Navbar';
 
@@ -13,7 +14,7 @@ interface Props {
 const LinkCreatedPage: NextPage<Props> = ({ link }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`https://cooldownload.software/${link.slug}`);
-    alert('Copied to clipboard!');
+    toast.success('Copied to clipboard!');
   };
 
   return (
