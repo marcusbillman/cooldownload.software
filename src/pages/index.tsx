@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useSession, signIn } from 'next-auth/react';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { Link } from '@prisma/client';
 import { CHALLENGES, THEMES } from '../constants';
 import toast from 'react-hot-toast';
@@ -220,6 +221,8 @@ const HomePage: NextPage = () => {
           </section>
         </div>
       </main>
+
+      <Footer />
     </>
   );
 };

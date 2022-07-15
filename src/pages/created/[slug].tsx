@@ -7,6 +7,7 @@ import NextLink from 'next/link';
 import toast from 'react-hot-toast';
 import Button from '../../components/Button';
 import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 import { Eye, EyeOff } from 'react-feather';
 
 interface Props {
@@ -89,6 +90,8 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
           </section>
         </div>
       </main>
+
+      <Footer />
     </>
   );
 };
