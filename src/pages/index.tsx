@@ -6,6 +6,7 @@ import { useSession, signIn } from 'next-auth/react';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import { Link } from '@prisma/client';
+import { CHALLENGES, THEMES } from '../constants';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
@@ -94,11 +95,11 @@ const HomePage: NextPage = () => {
                     required
                     className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
                   >
-                    <option value="random">Random</option>
-                    <option value="wait">Wait</option>
-                    <option value="3d-text">3D text</option>
-                    <option value="rotate-image">Rotate image</option>
-                    <option value="select-squares">Select squares</option>
+                    {CHALLENGES.map((challenge) => (
+                      <option key={challenge.name} value={challenge.name}>
+                        {challenge.friendlyName}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="w-full">
@@ -113,7 +114,11 @@ const HomePage: NextPage = () => {
                     required
                     className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
                   >
-                    <option value="default">Default</option>
+                    {THEMES.map((theme) => (
+                      <option key={theme.name} value={theme.name}>
+                        {theme.friendlyName}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
