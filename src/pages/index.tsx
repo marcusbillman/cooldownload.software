@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import { Link } from '@prisma/client';
 import { CHALLENGES, THEMES } from '../constants';
+import toast from 'react-hot-toast';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
@@ -18,13 +19,20 @@ const HomePage: NextPage = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const validationError = validateForm();
+    if (validationError) {
+      toast.error(validationError);
+      return;
+    }
+
     const response = await fetch('/api/links', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        targetUrl,
+        targetUrl: formattedUrl(targetUrl),
         challenge,
         theme,
         userEmail: session?.user?.email,
@@ -32,6 +40,21 @@ const HomePage: NextPage = () => {
     });
     const link: Link = await response.json();
     router.push(`/created/${link.slug}`);
+  };
+
+  const validateForm = () => {
+    const urlPattern =
+      /^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/gim;
+
+    if (!targetUrl.match(urlPattern)) return "That URL doesn't look right";
+    if (!CHALLENGES.some((o) => o.name === challenge))
+      return "That challenge doesn't exist";
+    if (!THEMES.some((o) => o.name === theme))
+      return "That theme doesn't exist";
+  };
+
+  const formattedUrl = (url: string) => {
+    if (!url.startsWith('http')) return `http://${url}`;
   };
 
   return (
