@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import { Link } from '@prisma/client';
 import { CHALLENGES, THEMES } from '../constants';
 import toast from 'react-hot-toast';
+import { Eye, EyeOff } from 'react-feather';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
@@ -146,12 +147,25 @@ const HomePage: NextPage = () => {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="bg-blue-200 w-12 h-12 rounded-full"></div>
+                {session ? (
+                  <div className="flex items-center justify-center bg-green-200 w-12 h-12 rounded-full">
+                    <Eye />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center bg-red-200 w-12 h-12 rounded-full">
+                    <EyeOff />
+                  </div>
+                )}
                 <div>
                   <p className="font-medium">Tracking</p>
                   <p className="text-2xl">{session ? 'Enabled' : 'Disabled'}</p>
                 </div>
               </div>
+              {session && (
+                <p className="text-gray-500">
+                  Tracking can only be viewed by you while signed in.
+                </p>
+              )}
               <div className="flex items-center gap-4">
                 <Button htmlButtonType="submit">Create sketchy link</Button>
                 {!session && (
