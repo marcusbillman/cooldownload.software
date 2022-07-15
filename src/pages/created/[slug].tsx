@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { prisma } from '../../server/db/client';
-import type { Link } from '../../types';
+import type { Link } from '@prisma/client';
 import NextLink from 'next/link';
 import Button from '../../components/Button';
 import Navbar from '../../components/Navbar';
