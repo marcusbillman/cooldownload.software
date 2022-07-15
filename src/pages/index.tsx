@@ -54,7 +54,7 @@ const HomePage: NextPage = () => {
   };
 
   const formattedUrl = (url: string) => {
-    if (!url.startsWith('http')) return `http://${url}`;
+    return url.startsWith('http') ? url : `http://${url}`;
   };
 
   return (
