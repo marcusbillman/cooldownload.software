@@ -5,6 +5,7 @@ import type { Link } from '@prisma/client';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import NextLink from 'next/link';
+import { CHALLENGES } from '../constants';
 import ButtonChallenge from '../components/challenges/ButtonChallenge';
 import WaitChallenge from '../components/challenges/WaitChallenge';
 import ThreeDTextChallenge from '../components/challenges/ThreeDTextChallenge';
@@ -18,18 +19,13 @@ interface Props {
 const ChallengePage: NextPage<Props> = ({ link }) => {
   const router = useRouter();
 
-  const CHALLENGES = [
-    'button',
-    'wait',
-    '3d-text',
-    'rotate-image',
-    'select-squares',
-  ];
-
   let challengeToRender = link.challenge;
-  if (!CHALLENGES.includes(link.challenge)) {
+  if (
+    link.challenge === 'random' ||
+    !CHALLENGES.some((o) => o.name === link.challenge)
+  ) {
     const randomIndex = Math.floor(Math.random() * CHALLENGES.length);
-    challengeToRender = CHALLENGES[randomIndex] as string;
+    challengeToRender = CHALLENGES[randomIndex]!.name;
   }
 
   const onComplete = async () => {
