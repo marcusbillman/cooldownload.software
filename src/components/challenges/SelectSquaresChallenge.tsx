@@ -5,11 +5,7 @@ import { uniqueNamesGenerator, adjectives } from 'unique-names-generator';
 
 const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   const [imageUrl, setImageUrl] = React.useState('');
-  const [query, setQuery] = React.useState(
-    uniqueNamesGenerator({
-      dictionaries: [adjectives],
-    })
-  );
+  const [query, setQuery] = React.useState('');
   const [checkboxValues, setCheckboxValues] = React.useState(
     new Array(64).fill(false)
   );
@@ -17,6 +13,12 @@ const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   useEffect(() => {
+    setQuery(
+      uniqueNamesGenerator({
+        dictionaries: [adjectives],
+      })
+    );
+
     async function fetchImage() {
       const response = await fetch(
         'https://random.imagecdn.app/v1/image?width=512&height=512&format=text'

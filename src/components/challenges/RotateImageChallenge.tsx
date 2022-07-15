@@ -7,9 +7,11 @@ const RotateImageChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   const [imageUrl, setImageUrl] = React.useState('');
   const [sliderValue, setSliderValue] = React.useState(0);
   const [imageRotation, setImageRotation] = React.useState(0);
-  const [offset, setOffset] = React.useState(Math.random() * 360);
+  const [offset, setOffset] = React.useState(0);
 
   useEffect(() => {
+    setOffset(Math.random() * 360);
+
     async function fetchImage() {
       const response = await fetch(
         'https://random.imagecdn.app/v1/image?width=300&height=300&format=text'
