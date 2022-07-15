@@ -8,7 +8,13 @@ import Navbar from '../components/Navbar';
 import { Link } from '@prisma/client';
 import { CHALLENGES, THEMES } from '../constants';
 import toast from 'react-hot-toast';
-import { Eye, EyeOff } from 'react-feather';
+import {
+  Eye,
+  EyeOff,
+  Link as LinkIcon,
+  AlertOctagon,
+  Sliders,
+} from 'react-feather';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
@@ -175,6 +181,42 @@ const HomePage: NextPage = () => {
                 )}
               </div>
             </form>
+          </section>
+          <section>
+            <h2 className="text-2xl font-semibold mb-4">Features</h2>
+            <p className="mb-8">Why you should use this stupid thing.</p>
+            <ul className="flex flex-col gap-4 md:flex-row">
+              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+                <div className="flex items-center justify-center bg-blue-200 w-12 h-12 rounded-full">
+                  <LinkIcon />
+                </div>
+                <h3 className="font-bold">Sketchy links</h3>
+                <p>
+                  The links look like they will infect your computer with 15
+                  Internet Explorer toolbars.
+                </p>
+              </li>
+              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+                <div className="flex items-center justify-center bg-red-200 w-12 h-12 rounded-full">
+                  <AlertOctagon />
+                </div>
+                <h3 className="font-bold">Sketchier CAPTCHAs</h3>
+                <p>
+                  Visitors that click your link need to solve a ridiculous
+                  challenge before they are redirected.
+                </p>
+              </li>
+              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+                <div className="flex items-center justify-center bg-purple-200 w-12 h-12 rounded-full">
+                  <Sliders />
+                </div>
+                <h3 className="font-bold">Customise & track</h3>
+                <p>
+                  Select the challenge and how the page should look, and track
+                  how many people click your link.
+                </p>
+              </li>
+            </ul>
           </section>
         </div>
       </main>
