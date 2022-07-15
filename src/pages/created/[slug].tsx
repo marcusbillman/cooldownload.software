@@ -2,16 +2,20 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { prisma } from '../../server/db/client';
 import type { Link } from '@prisma/client';
+import { useSession } from 'next-auth/react';
 import NextLink from 'next/link';
 import toast from 'react-hot-toast';
 import Button from '../../components/Button';
 import Navbar from '../../components/Navbar';
+import { Eye, EyeOff } from 'react-feather';
 
 interface Props {
   link: Link;
 }
 
 const LinkCreatedPage: NextPage<Props> = ({ link }) => {
+  const { data: session } = useSession();
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`https://cooldownload.software/${link.slug}`);
     toast.success('Copied to clipboard!');
@@ -42,22 +46,46 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
           </section>
           <section>
             <div className="flex gap-4 items-center justify-between bg-blue-100 p-4 pl-6 rounded-lg mb-8">
-              <p className="text-2xl font-medium underline">
+              <p className="text-xl md:text-2xl font-medium underline break-all">
                 <NextLink href={`/${link.slug}`}>
                   {`cooldownload.software/${link.slug}`}
                 </NextLink>
               </p>
               <Button onClick={copyToClipboard}>Copy</Button>
             </div>
-            <div>
-              <h2 className="font-medium mb-1">Redirects to</h2>
-              <p className="text-blue-500 underline">
-                <NextLink href={link.targetUrl}>{link.targetUrl}</NextLink>
-              </p>
+            <div className="flex flex-col gap-8 sm:flex-row sm:gap-4">
+              <div className="flex-grow">
+                <h2 className="font-medium mb-1">Redirects to</h2>
+                <p className="text-blue-500 underline">
+                  <NextLink href={link.targetUrl}>{link.targetUrl}</NextLink>
+                </p>
+              </div>
+              <div className="flex flex-grow items-center gap-4">
+                {link.userEmail ? (
+                  <div className="flex items-center justify-center bg-green-200 w-12 h-12 rounded-full">
+                    <Eye />
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center bg-red-200 w-12 h-12 rounded-full">
+                    <EyeOff />
+                  </div>
+                )}
+                <div>
+                  <p className="font-medium">Tracking</p>
+                  <p className="text-2xl">{session ? 'Enabled' : 'Disabled'}</p>
+                </div>
+              </div>
             </div>
           </section>
           <section>
-            <Button href="/">Create another</Button>
+            <div className="flex items-center gap-4">
+              <Button href="/">Create another</Button>
+              {session && (
+                <Button variant="secondary" href="/dashboard">
+                  Go to tracking
+                </Button>
+              )}
+            </div>
           </section>
         </div>
       </main>
