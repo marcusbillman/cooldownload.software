@@ -36,10 +36,10 @@ const Navbar: FC<Props> = () => {
               </li>
               <li
                 className={`${
-                  router.asPath === '/track' ? 'bg-white' : 'text-gray-500'
+                  router.asPath === '/dashboard' ? 'bg-white' : 'text-gray-500'
                 } font-medium px-4 py-3 rounded-full`}
               >
-                <NextLink href="/track">Track</NextLink>
+                <NextLink href="/dashboard">Track</NextLink>
               </li>
             </ul>
           </nav>
