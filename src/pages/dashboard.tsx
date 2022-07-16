@@ -7,6 +7,7 @@ import { unstable_getServerSession as getServerSession } from 'next-auth/next';
 import { useSession, signIn } from 'next-auth/react';
 import { authOptions } from './api/auth/[...nextauth]';
 import NextLink from 'next/link';
+import toast from 'react-hot-toast';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -18,6 +19,11 @@ interface Props {
 
 const DashboardPage: NextPage<Props> = ({ links }) => {
   const { data: session } = useSession();
+
+  const copyToClipboard = (string: string) => {
+    navigator.clipboard.writeText(string);
+    toast.success('Copied to clipboard!');
+  };
 
   const getChallengeFriendlyName = (challengeName: string) => {
     const challenge = CHALLENGES.find((o) => o.name === challengeName);
@@ -68,7 +74,11 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                       <div className="flex items-center gap-4">
                         <Button
                           variant="secondary"
-                          onClick={() => alert('Copy')}
+                          onClick={() =>
+                            copyToClipboard(
+                              `https://cooldownload.software/${link.slug}`
+                            )
+                          }
                         >
                           Copy
                         </Button>
