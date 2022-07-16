@@ -75,11 +75,20 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
               <h1 className="text-3xl font-bold mb-4">
                 {session.user?.name}&apos;s sketchy links
               </h1>
-              <p>
-                Here you can track all links that you have created. Links that
-                you created while not being signed in aren’t trackable and
-                therefore don’t show up here.
-              </p>
+              {linksState.length > 0 ? (
+                <p>
+                  Here you can track and manage your sketchy links. If
+                  you&apos;ve created any links while not being signed in, those
+                  won&apos;t show up here.
+                </p>
+              ) : (
+                <>
+                  <p className="mb-8">
+                    You haven&apos;t created any trackable links yet.
+                  </p>
+                  <Button href="/">Create sketchy link</Button>
+                </>
+              )}
             </section>
             <section>
               <ul className="flex flex-col gap-8">
