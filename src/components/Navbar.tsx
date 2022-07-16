@@ -52,17 +52,19 @@ const Navbar: FC<Props> = () => {
           <div className="hidden md:flex items-center gap-8">
             {session ? (
               <>
-                <div className="flex items-center gap-2">
-                  {session.user?.image && (
-                    <Image
-                      src={session.user?.image}
-                      alt={`${session.user?.name} avatar`}
-                      width={32}
-                      height={32}
-                    ></Image>
-                  )}
-                  <p className="font-medium">{session.user?.name}</p>
-                </div>
+                <NextLink href="/dashboard">
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    {session.user?.image && (
+                      <Image
+                        src={session.user?.image}
+                        alt={`${session.user?.name} avatar`}
+                        width={32}
+                        height={32}
+                      ></Image>
+                    )}
+                    <p className="font-medium">{session.user?.name}</p>
+                  </div>
+                </NextLink>
                 <Button variant="secondary" onClick={signOut}>
                   Sign out
                 </Button>
