@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import type { ChallengeProps } from './';
 import Image from 'next/image';
 import { uniqueNamesGenerator, adjectives } from 'unique-names-generator';
+import Button from '../Button';
 
 const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   const [imageUrl, setImageUrl] = React.useState('');
@@ -37,14 +38,14 @@ const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   const onClick = () => {
     if (checkboxValues.filter((value) => value).length < 5) {
-      setErrorMessage('You must select at least 5 squares');
+      setErrorMessage('You must select at least 5 squares.');
       return;
     }
     setAttempts(attempts + 1);
     if (attempts >= 5) onComplete();
     if (attempts < 2 || Math.random() < 0.75) {
       setCheckboxValues(new Array(64).fill(false));
-      setErrorMessage('Please try again');
+      setErrorMessage('Please try again.');
       return;
     }
     onComplete();
@@ -52,25 +53,33 @@ const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   return (
     <>
-      <p>Select all squares that can be described as {query}.</p>
-      <div className="relative grid grid-cols-[repeat(8,1fr)] grid-rows-[repeat(8,1fr)] max-w-lg aspect-square">
-        {imageUrl && (
-          <div className="absolute inset-0 -z-10">
-            <Image src={imageUrl} width={512} height={512} alt=""></Image>
-          </div>
+      <div className="flex flex-col gap-6">
+        <p className="font-bold">
+          Select all squares that can be described as {query}.
+        </p>
+        <div className="relative grid grid-cols-[repeat(8,1fr)] grid-rows-[repeat(8,1fr)] max-w-lg aspect-square rounded-lg overflow-hidden">
+          {imageUrl && (
+            <div className="absolute inset-0 -z-10">
+              <Image src={imageUrl} width={512} height={512} alt=""></Image>
+            </div>
+          )}
+          {checkboxValues.map((_, index) => (
+            <input
+              type="checkbox"
+              key={index}
+              checked={checkboxValues[index]}
+              onChange={() => onCheckboxChange(index)}
+              className="h-full opacity-20 checked:opacity-50 accent-white"
+            />
+          ))}
+        </div>
+        <Button onClick={onClick}>Done</Button>
+        {errorMessage && (
+          <p className="bg-red-200 border border-red-500 p-4 rounded-lg">
+            {errorMessage}
+          </p>
         )}
-        {checkboxValues.map((_, index) => (
-          <input
-            type="checkbox"
-            key={index}
-            checked={checkboxValues[index]}
-            onChange={() => onCheckboxChange(index)}
-            className="h-full opacity-10 checked:opacity-50 accent-blue-500"
-          />
-        ))}
       </div>
-      <button onClick={onClick}>Verify</button>
-      {errorMessage && <p>{errorMessage}</p>}
     </>
   );
 };
