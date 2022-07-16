@@ -16,7 +16,7 @@ const Navbar: FC<Props> = () => {
       <header className="bg-white">
         <div className="container relative min-h-[6rem] px-4 py-6 mx-auto flex items-center justify-between">
           <NextLink href="/">
-            <div>
+            <div className="cursor-pointer">
               <Image
                 src={'/assets/logo.svg'}
                 alt="cooldownload.software"
@@ -27,20 +27,26 @@ const Navbar: FC<Props> = () => {
           </NextLink>
           <nav>
             <ul className="flex gap-2 bg-gray-100 p-2 rounded-full">
-              <li
-                className={`${
-                  router.asPath === '/' ? 'bg-white' : 'text-gray-500'
-                } font-medium px-4 py-3 rounded-full`}
-              >
-                <NextLink href="/">Create</NextLink>
-              </li>
-              <li
-                className={`${
-                  router.asPath === '/dashboard' ? 'bg-white' : 'text-gray-500'
-                } font-medium px-4 py-3 rounded-full`}
-              >
-                <NextLink href="/dashboard">Track</NextLink>
-              </li>
+              <NextLink href="/">
+                <li
+                  className={`${
+                    router.asPath === '/' ? 'bg-white' : 'text-gray-500'
+                  } font-medium px-4 py-3 rounded-full cursor-pointer`}
+                >
+                  Create
+                </li>
+              </NextLink>
+              <NextLink href="/dashboard">
+                <li
+                  className={`${
+                    router.asPath === '/dashboard'
+                      ? 'bg-white'
+                      : 'text-gray-500'
+                  } font-medium px-4 py-3 rounded-full cursor-pointer`}
+                >
+                  Track
+                </li>
+              </NextLink>
             </ul>
           </nav>
           <div className="hidden md:flex items-center gap-8">
