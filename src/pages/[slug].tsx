@@ -90,27 +90,29 @@ const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
             <p className="text-gray-500 mb-8">
               Complete the task below to be redirected to your page
             </p>
-            {challengeToRender === 'button' && (
-              <ButtonChallenge onComplete={onComplete}></ButtonChallenge>
-            )}
-            {challengeToRender === 'wait' && (
-              <WaitChallenge onComplete={onComplete}></WaitChallenge>
-            )}
-            {challengeToRender === '3d-text' && (
-              <ThreeDTextChallenge
-                onComplete={onComplete}
-              ></ThreeDTextChallenge>
-            )}
-            {challengeToRender === 'rotate-image' && (
-              <RotateImageChallenge
-                onComplete={onComplete}
-              ></RotateImageChallenge>
-            )}
-            {challengeToRender === 'select-squares' && (
-              <SelectSquaresChallenge
-                onComplete={onComplete}
-              ></SelectSquaresChallenge>
-            )}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              {challengeToRender === 'button' && (
+                <ButtonChallenge onComplete={onComplete}></ButtonChallenge>
+              )}
+              {challengeToRender === 'wait' && (
+                <WaitChallenge onComplete={onComplete}></WaitChallenge>
+              )}
+              {challengeToRender === '3d-text' && (
+                <ThreeDTextChallenge
+                  onComplete={onComplete}
+                ></ThreeDTextChallenge>
+              )}
+              {challengeToRender === 'rotate-image' && (
+                <RotateImageChallenge
+                  onComplete={onComplete}
+                ></RotateImageChallenge>
+              )}
+              {challengeToRender === 'select-squares' && (
+                <SelectSquaresChallenge
+                  onComplete={onComplete}
+                ></SelectSquaresChallenge>
+              )}
+            </div>
             <div className="md:flex flex-row gap-8 mt-8">
               <Image
                 src="/assets/ads/rectangle-antivirus.png"
