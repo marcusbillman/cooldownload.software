@@ -14,19 +14,11 @@ import SelectSquaresChallenge from '../components/challenges/SelectSquaresChalle
 
 interface Props {
   link: Link;
+  challengeToRender: string;
 }
 
-const ChallengePage: NextPage<Props> = ({ link }) => {
+const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
   const router = useRouter();
-
-  let challengeToRender = link.challenge;
-  if (
-    link.challenge === 'random' ||
-    !CHALLENGES.some((o) => o.name === link.challenge)
-  ) {
-    const randomIndex = Math.floor(Math.random() * CHALLENGES.length);
-    challengeToRender = CHALLENGES[randomIndex]!.name;
-  }
 
   const onComplete = async () => {
     await fetch(`/api/links/${link.slug}/completed-count`, {
@@ -152,16 +144,29 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context?.params?.slug;
   if (typeof slug !== 'string') return { notFound: true };
 
-  let link;
+  let link: Link;
   try {
-    link = await prisma.link.findFirst({
+    link = (await prisma.link.findFirst({
       where: { slug },
-    });
+    })) as Link;
   } catch (error) {
     return { notFound: true };
   }
-
   if (!link) return { notFound: true };
+
+  let challengeToRender = link.challenge;
+  if (
+    link.challenge === 'random' ||
+    !CHALLENGES.some((o) => o.name === link.challenge)
+  ) {
+    const challengesExcludingRandom = CHALLENGES.filter(
+      (o) => o.name !== 'random'
+    );
+    const randomIndex = Math.floor(
+      Math.random() * challengesExcludingRandom.length
+    );
+    challengeToRender = challengesExcludingRandom[randomIndex]!.name;
+  }
 
   await prisma.link.update({
     where: { slug },
@@ -171,6 +176,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       link: JSON.parse(JSON.stringify(link)),
+      challengeToRender,
     },
   };
 };
