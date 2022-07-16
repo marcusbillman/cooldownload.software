@@ -25,8 +25,11 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
   return (
     <>
       <Head>
-        <title>Sketchy link shortener | cooldownload.software</title>
-        <meta name="description" content="Sketchy link shortener" />
+        <title>Link created | cooldownload.software</title>
+        <meta
+          name="description"
+          content="Mess with your friends by sending them questionable links using this sketchy link shortener."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

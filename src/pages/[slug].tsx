@@ -30,8 +30,8 @@ const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
   return (
     <>
       <Head>
-        <title>Sketchy link shortener | cooldownload.software</title>
-        <meta name="description" content="Sketchy link shortener" />
+        <title>cooldownload.software</title>
+        <meta name="description" content="Awesome web link" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
