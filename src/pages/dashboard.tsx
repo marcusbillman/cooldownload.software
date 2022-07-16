@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { prisma } from '../server/db/client';
 import type { Link } from '@prisma/client';
 import { CHALLENGES, THEMES } from '../constants';
 import { unstable_getServerSession as getServerSession } from 'next-auth/next';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession, getSession, signIn } from 'next-auth/react';
 import { authOptions } from './api/auth/[...nextauth]';
 import NextLink from 'next/link';
 import toast from 'react-hot-toast';
@@ -18,11 +19,33 @@ interface Props {
 }
 
 const DashboardPage: NextPage<Props> = ({ links }) => {
+  const [linksState, setLinksState] = useState(links);
+
   const { data: session } = useSession();
 
   const copyToClipboard = (string: string) => {
     navigator.clipboard.writeText(string);
     toast.success('Copied to clipboard!');
+  };
+
+  const deleteLinkBySlug = async (slug: string) => {
+    const userConfirmed = confirm(
+      `Are you sure you want to delete this link?\ncooldownload.software/${slug}`
+    );
+    if (!userConfirmed) return;
+
+    const fetchPromise = fetch(`/api/links/${slug}`, {
+      method: 'DELETE',
+    });
+    fetchPromise.then(() => {
+      setLinksState(linksState.filter((link) => link.slug !== slug));
+    });
+
+    toast.promise(fetchPromise, {
+      loading: 'Deleting link...',
+      success: 'Link deleted!',
+      error: 'An error occurred, please try again later',
+    });
   };
 
   const getChallengeFriendlyName = (challengeName: string) => {
@@ -60,7 +83,7 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
             </section>
             <section>
               <ul className="flex flex-col gap-8">
-                {links.map((link) => (
+                {linksState.map((link) => (
                   <li
                     className="border border-gray-200 rounded-lg"
                     key={link.id}
@@ -84,7 +107,7 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                         </Button>
                         <Button
                           variant="destructive"
-                          onClick={() => alert('Delete')}
+                          onClick={() => deleteLinkBySlug(link.slug)}
                         >
                           Delete
                         </Button>
