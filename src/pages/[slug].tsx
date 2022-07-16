@@ -163,6 +163,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (!link) return { notFound: true };
 
+  await prisma.link.update({
+    where: { slug },
+    data: { visitedCount: { increment: 1 } },
+  });
+
   return {
     props: {
       link: JSON.parse(JSON.stringify(link)),
