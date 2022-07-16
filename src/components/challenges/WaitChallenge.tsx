@@ -21,15 +21,17 @@ const WaitChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   });
   return (
     <>
-      <p>
-        Wait <span className="text-blue-500 font-bold">{seconds}</span> seconds
-        to continue{' '}
-      </p>
-      <div className="w-full h-8 bg-gray-200">
-        <div
-          className="h-full bg-blue-500 transition-transform duration-1000 ease-linear origin-left"
-          style={{ transform: `scaleX(${1 - seconds / 10})` }}
-        ></div>
+      <div className="flex flex-col gap-4">
+        <p className="font-bold">
+          Wait <span className="text-blue-500 font-bold">{seconds}</span>{' '}
+          seconds to continue
+        </p>
+        <div className="w-full h-8 bg-gray-200 rounded-full">
+          <div
+            className="h-full bg-blue-500 rounded-full transition-all duration-1000 ease-linear origin-left"
+            style={{ width: `${(1 - seconds / 10) * 100}%` }}
+          ></div>
+        </div>
       </div>
     </>
   );
