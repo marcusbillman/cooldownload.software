@@ -30,11 +30,13 @@ const Button: FC<Props> = ({
   return (
     <>
       {href ? (
-        <div
-          className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg`}
-        >
-          <NextLink href={href}>{children}</NextLink>
-        </div>
+        <NextLink href={href}>
+          <span
+            className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg cursor-pointer`}
+          >
+            {children}
+          </span>
+        </NextLink>
       ) : (
         <button
           type={htmlButtonType}
