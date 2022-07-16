@@ -9,6 +9,7 @@ import {
   adjectives,
   animals,
 } from 'unique-names-generator';
+import Button from '../Button';
 
 const generateKey = () =>
   uniqueNamesGenerator({
@@ -21,6 +22,7 @@ const ThreeDTextChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   const [key, setKey] = React.useState(generateKey());
   const [inputText, setInputText] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -87,6 +89,7 @@ const ThreeDTextChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
+    setErrorMessage('');
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,6 +97,7 @@ const ThreeDTextChallenge: FC<ChallengeProps> = ({ onComplete }) => {
     if (inputText.toLowerCase().trim() !== key) {
       setKey(generateKey());
       setInputText('');
+      setErrorMessage('Please try again.');
       return;
     }
     onComplete();
@@ -101,24 +105,32 @@ const ThreeDTextChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   return (
     <>
-      <p>Type the text</p>
-      <div
-        ref={mountRef}
-        className="h-96 border-black border-2 overflow-hidden"
-      ></div>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          value={inputText}
-          onChange={onChange}
-          className="border-gray-500 border-2"
-        />
-        <button type="submit">Verify</button>
-      </form>
-      <p>
-        Tip: If reading is difficult, try dragging your mouse or finger to look
-        around
-      </p>
+      <div className="flex flex-col gap-6">
+        <p className="font-bold">Type the text</p>
+        <div
+          ref={mountRef}
+          className="h-96 border border-gray-200 rounded-lg overflow-hidden"
+        ></div>
+        <form className="flex gap-4" onSubmit={onSubmit}>
+          <input
+            type="text"
+            value={inputText}
+            placeholder="Type the text displayed above"
+            onChange={onChange}
+            className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
+          />
+          <Button htmlButtonType="submit">Done</Button>
+        </form>
+        {errorMessage && (
+          <p className="bg-red-200 border border-red-500 p-4 rounded-lg">
+            {errorMessage}
+          </p>
+        )}
+        <p className="text-gray-500">
+          Tip: If reading is difficult, try dragging your mouse or finger to
+          look around
+        </p>
+      </div>
     </>
   );
 };
