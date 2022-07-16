@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import type { ChallengeProps } from './';
 import Image from 'next/image';
 import CircularSlider from '@fseehawer/react-circular-slider';
+import Button from '../Button';
 
 const RotateImageChallenge: FC<ChallengeProps> = ({ onComplete }) => {
   const [imageUrl, setImageUrl] = React.useState('');
@@ -44,35 +45,35 @@ const RotateImageChallenge: FC<ChallengeProps> = ({ onComplete }) => {
 
   return (
     <>
-      <p>Rotate the image until it looks upright.</p>
-      <div className="inline-block relative">
-        {imageUrl && (
-          <Image
-            src={imageUrl}
-            width={300}
-            height={300}
-            alt=""
-            className="rounded-full transition-transform"
-            style={{
-              transform: `rotate(${imageRotation}deg)`,
-            }}
-          ></Image>
-        )}
-        <div className="absolute inset-0">
-          <CircularSlider
-            min={0}
-            max={100}
-            width={300}
-            hideLabelValue={true}
-            progressColorFrom="#00000000"
-            progressColorTo="#00000000"
-            onChange={onChange}
-          />
+      <div className="flex flex-col gap-6">
+        <p className="font-bold">Rotate the image until it looks upright.</p>
+        <div className="relative">
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              width={300}
+              height={300}
+              alt=""
+              className="rounded-full transition-transform"
+              style={{
+                transform: `rotate(${imageRotation}deg)`,
+              }}
+            ></Image>
+          )}
+          <div className="absolute inset-0">
+            <CircularSlider
+              min={0}
+              max={100}
+              width={300}
+              hideLabelValue={true}
+              progressColorFrom="#00000000"
+              progressColorTo="#00000000"
+              onChange={onChange}
+            />
+          </div>
         </div>
+        <Button onClick={onClick}>Done</Button>
       </div>
-      <button onClick={onClick} className="block">
-        Done
-      </button>
     </>
   );
 };
