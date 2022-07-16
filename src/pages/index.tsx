@@ -176,8 +176,8 @@ const HomePage: NextPage = () => {
               <div className="flex items-center gap-4">
                 <Button htmlButtonType="submit">Create sketchy link</Button>
                 {!session && (
-                  <Button variant="secondary" onClick={signIn}>
-                    Sign in to enable tracking
+                  <Button variant="secondary" onClick={() => signIn('discord')}>
+                    Enable tracking
                   </Button>
                 )}
               </div>

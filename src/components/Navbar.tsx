@@ -62,8 +62,8 @@ const Navbar: FC<Props> = () => {
                 </Button>
               </>
             ) : (
-              <Button variant="secondary" onClick={signIn}>
-                Sign in
+              <Button variant="secondary" onClick={() => signIn('discord')}>
+                Sign in with Discord
               </Button>
             )}
           </div>

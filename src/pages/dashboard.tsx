@@ -196,7 +196,9 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
               <p className="mb-8">
                 You need to be signed in to manage links that you have created.
               </p>
-              <Button onClick={signIn}>Sign in</Button>
+              <Button onClick={() => signIn('discord')}>
+                Sign in with Discord
+              </Button>
             </section>
           </div>
         </main>
