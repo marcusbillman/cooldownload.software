@@ -19,12 +19,13 @@ import {
   AlertOctagon,
   Sliders,
 } from 'react-feather';
-import { Listbox } from '@headlessui/react';
+import { Listbox, RadioGroup } from '@headlessui/react';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
   const [selectedChallenge, setSelectedChallenge] = useState(RANDOM_CHALLENGE);
   const [selectedTheme, setSelectedTheme] = useState(THEMES[0]!);
+  const [selectedSlugType, setSelectedSlugType] = useState('sketchy');
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -47,6 +48,7 @@ const HomePage: NextPage = () => {
         targetUrl: formattedUrl(targetUrl),
         challenge: selectedChallenge.name,
         theme: selectedTheme.name,
+        slugType: selectedSlugType,
         userEmail: session?.user?.email,
       }),
     });
@@ -123,10 +125,7 @@ const HomePage: NextPage = () => {
               </div>
               <div className="flex flex-col gap-8 sm:flex-row sm:gap-4">
                 <div className="w-full">
-                  <label
-                    htmlFor="challenge"
-                    className="block  font-medium mb-2"
-                  >
+                  <label htmlFor="challenge" className="block font-medium mb-2">
                     Select challenge
                   </label>
                   <Listbox
@@ -227,6 +226,49 @@ const HomePage: NextPage = () => {
                     )}
                   </Listbox>
                 </div>
+              </div>
+              <div>
+                <label htmlFor="slugtype" className="block font-medium mb-2">
+                  How should the link look?
+                </label>
+                <RadioGroup
+                  value={selectedSlugType}
+                  onChange={setSelectedSlugType}
+                  className="flex flex-col gap-2 sm:flex-row"
+                >
+                  <RadioGroup.Option value="sketchy">
+                    {({ checked }) => (
+                      <div
+                        className={`flex items-center gap-2 bg-white border-2 px-4 py-3 rounded-lg cursor-pointer ${
+                          checked ? 'border-blue-500' : 'border-transparent'
+                        }`}
+                      >
+                        <div
+                          className={`w-4 h-4 border border-gray-200 rounded-full ${
+                            checked ? 'border-4 border-blue-500' : ''
+                          }`}
+                        ></div>
+                        <span>Sketchy</span>
+                      </div>
+                    )}
+                  </RadioGroup.Option>
+                  <RadioGroup.Option value="really-sketchy">
+                    {({ checked }) => (
+                      <div
+                        className={`flex items-center gap-2 bg-white border-2 px-4 py-3 rounded-lg cursor-pointer ${
+                          checked ? 'border-blue-500' : 'border-transparent'
+                        }`}
+                      >
+                        <div
+                          className={`w-4 h-4 border border-gray-200 rounded-full ${
+                            checked ? 'border-4 border-blue-500' : ''
+                          }`}
+                        ></div>
+                        <span>Really sketchy</span>
+                      </div>
+                    )}
+                  </RadioGroup.Option>
+                </RadioGroup>
               </div>
               <div className="flex items-center gap-4">
                 {session ? (
