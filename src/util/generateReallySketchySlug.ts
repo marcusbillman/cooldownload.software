@@ -1,5 +1,5 @@
 import Randomstring from 'randomstring';
-import { words, separators, suffixes } from './wordlist.json';
+import WORDLIST from './wordlist.json';
 
 const generateReallySketchySlug = () => {
   let slug = '';
@@ -8,15 +8,15 @@ const generateReallySketchySlug = () => {
     const outcome = Math.random();
 
     if (outcome < 0.7) {
-      const word = pickRandom(words);
+      const word = pickRandom(WORDLIST.words);
       if (!slug.includes(word)) {
-        slug += pickRandom(separators) + word;
+        slug += pickRandom(WORDLIST.separators) + word;
       }
     } else if (outcome < 0.9) {
       const length = Math.floor(Math.random() * 10) + 2;
-      slug += pickRandom(separators) + Randomstring.generate(length);
+      slug += pickRandom(WORDLIST.separators) + Randomstring.generate(length);
     } else {
-      slug += pickRandom(suffixes);
+      slug += pickRandom(WORDLIST.extensions);
     }
   }
 
