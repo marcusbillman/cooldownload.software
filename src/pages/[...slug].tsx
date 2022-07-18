@@ -143,8 +143,8 @@ const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const slug = context?.params?.slug;
-  if (typeof slug !== 'string') return { notFound: true };
+  let slug = context?.params?.slug;
+  if (Array.isArray(slug)) slug = slug.join('/');
 
   let link: Link;
   try {

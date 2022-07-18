@@ -100,11 +100,12 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const slug = context?.params?.slug;
-  if (typeof slug !== 'string') return { notFound: true };
+  let slug = context?.params?.slug;
+  if (Array.isArray(slug)) slug = slug.join('/');
+
+  console.log(slug);
 
   let link;
-
   try {
     link = await prisma.link.findFirst({
       where: { slug },
