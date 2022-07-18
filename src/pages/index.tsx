@@ -91,7 +91,7 @@ const HomePage: NextPage = () => {
       <main>
         <div className="container max-w-4xl flex flex-col gap-24 p-4 mx-auto">
           <section className="mt-12">
-            <h1 className="text-3xl font-bold mb-4">Make your links sketchy</h1>
+            <h1 className="text-4xl font-bold mb-4">Make your links sketchy</h1>
             <p>
               Mess with your friends by sending them questionable links.
               <br />
