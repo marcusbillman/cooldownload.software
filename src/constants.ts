@@ -1,9 +1,5 @@
 export const CHALLENGES = [
   {
-    name: 'random',
-    friendlyName: 'Random',
-  },
-  {
     name: 'wait',
     friendlyName: 'Wait',
   },
@@ -20,6 +16,11 @@ export const CHALLENGES = [
     friendlyName: 'Select Squares',
   },
 ];
+
+export const RANDOM_CHALLENGE = {
+  name: 'random',
+  friendlyName: 'Random',
+};
 
 export const THEMES = [
   {

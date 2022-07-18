@@ -156,18 +156,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   if (!link) return { notFound: true };
 
+  // Decide what challenge to render
   let challengeToRender = link.challenge;
   if (
     link.challenge === 'random' ||
     !CHALLENGES.some((o) => o.name === link.challenge)
   ) {
-    const challengesExcludingRandom = CHALLENGES.filter(
-      (o) => o.name !== 'random'
-    );
-    const randomIndex = Math.floor(
-      Math.random() * challengesExcludingRandom.length
-    );
-    challengeToRender = challengesExcludingRandom[randomIndex]!.name;
+    const randomIndex = Math.floor(Math.random() * CHALLENGES.length);
+    challengeToRender = CHALLENGES[randomIndex]!.name;
   }
 
   await prisma.link.update({
