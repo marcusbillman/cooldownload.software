@@ -96,7 +96,7 @@ const HomePage: NextPage = () => {
             <form
               action="/api/links"
               method="post"
-              className="flex flex-col gap-8"
+              className="flex flex-col gap-8 bg-gray-50 p-4 rounded-lg"
               onSubmit={onSubmit}
             >
               <div>
