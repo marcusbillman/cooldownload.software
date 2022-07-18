@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession, signIn } from 'next-auth/react';
+import NextLink from 'next/link';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -167,23 +168,24 @@ const HomePage: NextPage = () => {
                   </div>
                 )}
                 <div>
-                  <p className="font-medium">Tracking</p>
-                  <p className="text-2xl">{session ? 'Enabled' : 'Disabled'}</p>
+                  <p className="font-medium">
+                    Tracking {session ? 'enabled' : 'disabled'}
+                  </p>
+                  {!session && (
+                    <NextLink href="#" className="text-gray-500">
+                      <a
+                        onClick={() => signIn('discord')}
+                        className="text-gray-500 underline"
+                      >
+                        {session
+                          ? 'View your links on the tracking page'
+                          : 'Sign in with Discord to enable'}
+                      </a>
+                    </NextLink>
+                  )}
                 </div>
               </div>
-              {session && (
-                <p className="text-gray-500">
-                  Tracking can only be viewed by you while signed in.
-                </p>
-              )}
-              <div className="flex items-center gap-4">
-                <Button htmlButtonType="submit">Create sketchy link</Button>
-                {!session && (
-                  <Button variant="secondary" onClick={() => signIn('discord')}>
-                    Enable tracking
-                  </Button>
-                )}
-              </div>
+              <Button htmlButtonType="submit">Create sketchy link</Button>
             </form>
           </section>
           <section>
