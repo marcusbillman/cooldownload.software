@@ -59,7 +59,7 @@ const SelectSquaresChallenge: FC<ChallengeProps> = ({ onComplete }) => {
         </p>
         <div className="relative grid grid-cols-[repeat(8,1fr)] grid-rows-[repeat(8,1fr)] max-w-lg aspect-square rounded-lg overflow-hidden">
           {imageUrl && (
-            <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0">
               <Image src={imageUrl} width={512} height={512} alt=""></Image>
             </div>
           )}
