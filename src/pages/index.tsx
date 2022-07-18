@@ -8,20 +8,23 @@ import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from '@prisma/client';
-import { CHALLENGES, THEMES } from '../constants';
+import { CHALLENGES, RANDOM_CHALLENGE, THEMES } from '../constants';
 import toast from 'react-hot-toast';
 import {
+  ChevronDown,
+  Check,
   Eye,
   EyeOff,
   Link as LinkIcon,
   AlertOctagon,
   Sliders,
 } from 'react-feather';
+import { Listbox } from '@headlessui/react';
 
 const HomePage: NextPage = () => {
   const [targetUrl, setTargetUrl] = useState('');
-  const [challenge, setChallenge] = useState('random');
-  const [theme, setTheme] = useState('default');
+  const [selectedChallenge, setSelectedChallenge] = useState(RANDOM_CHALLENGE);
+  const [selectedTheme, setSelectedTheme] = useState(THEMES[0]!);
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -42,8 +45,8 @@ const HomePage: NextPage = () => {
       },
       body: JSON.stringify({
         targetUrl: formattedUrl(targetUrl),
-        challenge,
-        theme,
+        challenge: selectedChallenge.name,
+        theme: selectedTheme.name,
         userEmail: session?.user?.email,
       }),
     });
@@ -56,9 +59,13 @@ const HomePage: NextPage = () => {
       /^(https?:\/\/)?([\da-z\.-]+\.[a-z\.]{2,6}|[\d\.]+)([\/:?=&#]{1}[\da-z\.-]+)*[\/\?]?$/gim;
 
     if (!targetUrl.match(urlPattern)) return "That URL doesn't look right";
-    if (!CHALLENGES.some((o) => o.name === challenge))
+    if (
+      ![RANDOM_CHALLENGE, ...CHALLENGES].some(
+        (o) => o.name === selectedChallenge.name
+      )
+    )
       return "That challenge doesn't exist";
-    if (!THEMES.some((o) => o.name === theme))
+    if (!THEMES.some((o) => o.name === selectedTheme.name))
       return "That theme doesn't exist";
   };
 
@@ -122,39 +129,103 @@ const HomePage: NextPage = () => {
                   >
                     Select challenge
                   </label>
-                  <select
+                  <Listbox
                     name="challenge"
-                    id="challenge"
-                    value={challenge}
-                    onChange={(e) => setChallenge(e.target.value)}
-                    required
-                    className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
+                    value={selectedChallenge}
+                    onChange={setSelectedChallenge}
                   >
-                    {CHALLENGES.map((challenge) => (
-                      <option key={challenge.name} value={challenge.name}>
-                        {challenge.friendlyName}
-                      </option>
-                    ))}
-                  </select>
+                    {({ open }) => (
+                      <div className="relative">
+                        <Listbox.Button className="flex items-center w-full bg-white border border-gray-200 px-4 py-3 rounded-lg cursor-default">
+                          <span className="flex-grow text-left">
+                            {selectedChallenge.friendlyName}
+                          </span>
+                          <ChevronDown
+                            className={
+                              'text-gray-500 transition-transform' +
+                              (open ? ' rotate-180' : '')
+                            }
+                          />
+                        </Listbox.Button>
+                        <Listbox.Options className="absolute z-30 w-full max-h-64 bg-white border border-gray-200 shadow-lg mt-2 py-2 rounded-lg overflow-auto">
+                          {[RANDOM_CHALLENGE, ...CHALLENGES].map(
+                            (challenge) => (
+                              <Listbox.Option
+                                key={challenge.name}
+                                value={challenge}
+                                className={({ selected, active }) =>
+                                  'flex items-center cursor-default select-none py-1 px-4' +
+                                  (selected ? ' font-bold' : '') +
+                                  (active ? ' bg-gray-100' : '')
+                                }
+                              >
+                                {({ selected }) => (
+                                  <>
+                                    <span className="flex-grow">
+                                      {challenge.friendlyName}
+                                    </span>
+                                    {selected && (
+                                      <Check className="text-blue-500" />
+                                    )}
+                                  </>
+                                )}
+                              </Listbox.Option>
+                            )
+                          )}
+                        </Listbox.Options>
+                      </div>
+                    )}
+                  </Listbox>
                 </div>
                 <div className="w-full">
                   <label htmlFor="theme" className="block font-medium mb-2">
                     Select theme
                   </label>
-                  <select
+                  <Listbox
                     name="theme"
-                    id="theme"
-                    value={theme}
-                    onChange={(e) => setTheme(e.target.value)}
-                    required
-                    className="block w-full border border-gray-200 px-4 py-3 rounded-lg"
+                    value={selectedTheme}
+                    onChange={setSelectedTheme}
                   >
-                    {THEMES.map((theme) => (
-                      <option key={theme.name} value={theme.name}>
-                        {theme.friendlyName}
-                      </option>
-                    ))}
-                  </select>
+                    {({ open }) => (
+                      <div className="relative">
+                        <Listbox.Button className="flex items-center w-full bg-white border border-gray-200 px-4 py-3 rounded-lg cursor-default">
+                          <span className="flex-1 text-left">
+                            {selectedTheme.friendlyName}
+                          </span>
+                          <ChevronDown
+                            className={
+                              'text-gray-500 transition-transform' +
+                              (open ? ' rotate-180' : '')
+                            }
+                          />
+                        </Listbox.Button>
+                        <Listbox.Options className="absolute z-30 w-full max-h-60 bg-white border border-gray-200 shadow-lg mt-2 py-2 rounded-lg overflow-auto">
+                          {THEMES.map((theme) => (
+                            <Listbox.Option
+                              key={theme.name}
+                              value={theme}
+                              className={({ selected, active }) =>
+                                'flex items-center cursor-default select-none py-1 px-4' +
+                                (selected ? ' font-bold' : '') +
+                                (active ? ' bg-gray-100' : '')
+                              }
+                            >
+                              {({ selected }) => (
+                                <>
+                                  <span className="flex-grow">
+                                    {theme.friendlyName}
+                                  </span>
+                                  {selected && (
+                                    <Check className="text-blue-500" />
+                                  )}
+                                </>
+                              )}
+                            </Listbox.Option>
+                          ))}
+                        </Listbox.Options>
+                      </div>
+                    )}
+                  </Listbox>
                 </div>
               </div>
               <div className="flex items-center gap-4">
