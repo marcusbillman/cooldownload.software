@@ -31,11 +31,11 @@ const Button: FC<Props> = ({
     <>
       {href ? (
         <NextLink href={href}>
-          <span
-            className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg cursor-pointer`}
+          <a
+            className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg`}
           >
             {children}
-          </span>
+          </a>
         </NextLink>
       ) : (
         <button

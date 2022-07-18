@@ -50,19 +50,19 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
           </section>
           <section>
             <div className="flex gap-4 items-center justify-between bg-blue-100 p-4 pl-6 rounded-lg mb-8">
-              <p className="text-xl md:text-2xl font-medium underline break-all">
-                <NextLink href={`/${link.slug}`}>
+              <NextLink href={`/${link.slug}`}>
+                <a className="text-xl md:text-2xl font-medium underline break-all">
                   {`cooldownload.software/${link.slug}`}
-                </NextLink>
-              </p>
+                </a>
+              </NextLink>
               <Button onClick={copyToClipboard}>Copy</Button>
             </div>
             <div className="flex flex-col gap-8 sm:flex-row sm:gap-4">
               <div className="flex-grow">
                 <h2 className="font-medium mb-1">Redirects to</h2>
-                <p className="text-blue-500 underline">
-                  <NextLink href={link.targetUrl}>{link.targetUrl}</NextLink>
-                </p>
+                <NextLink href={link.targetUrl}>
+                  <a className="text-blue-500 underline">{link.targetUrl}</a>
+                </NextLink>
               </div>
               <div className="flex flex-grow items-center gap-4">
                 {link.userEmail ? (

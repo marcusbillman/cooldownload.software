@@ -101,11 +101,9 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                     key={link.id}
                   >
                     <div className="flex items-center justify-between gap-4 p-4 border-b border-gray-200">
-                      <p className="font-medium underline">
-                        <NextLink href={`/${link.slug}`}>
-                          {`cooldownload.software/${link.slug}`}
-                        </NextLink>
-                      </p>
+                      <NextLink href={`/${link.slug}`}>
+                        <a className="font-medium underline">{`cooldownload.software/${link.slug}`}</a>
+                      </NextLink>
                       <div className="flex items-center gap-4">
                         <Button
                           variant="secondary"
@@ -129,11 +127,9 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                       <div className="flex">
                         <div className="flex-1">
                           <p className="font-medium mb-1">Redirects to</p>
-                          <p className="underline">
-                            <NextLink href={link.targetUrl}>
-                              {link.targetUrl}
-                            </NextLink>
-                          </p>
+                          <NextLink href={link.targetUrl}>
+                            <a className="underline">{link.targetUrl}</a>
+                          </NextLink>
                         </div>
                         <div className="flex-1">
                           <p className="font-medium mb-1">Date created</p>

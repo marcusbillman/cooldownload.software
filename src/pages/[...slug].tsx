@@ -37,16 +37,16 @@ const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
 
       <header className="bg-gradient-to-b from-blue-200">
         <div className="container relative min-h-[6rem] py-6 mx-auto flex gap-16 items-center justify-center">
-          <div className="absolute left-4 cursor-pointer">
-            <NextLink href="/">
+          <NextLink href="/">
+            <a className="absolute left-4">
               <Image
                 src={'/assets/logo.svg'}
                 alt="cooldownload.software"
                 width={179}
                 height={48}
               ></Image>
-            </NextLink>
-          </div>
+            </a>
+          </NextLink>
           <ul className="hidden lg:flex gap-8">
             <li>Free Software</li>
             <li>New Deals</li>
