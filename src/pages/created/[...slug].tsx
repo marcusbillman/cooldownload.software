@@ -103,8 +103,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let slug = context?.params?.slug;
   if (Array.isArray(slug)) slug = slug.join('/');
 
-  console.log(slug);
-
   let link;
   try {
     link = await prisma.link.findFirst({
