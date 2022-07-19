@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
 import NextLink from 'next/link';
+import { Link as LinkIcon } from 'react-feather';
 
 interface Props {
   href?: string;
   variant?: 'primary' | 'secondary' | 'destructive';
   htmlButtonType?: 'button' | 'submit' | 'reset';
+  isLoading?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
 }
@@ -13,6 +15,7 @@ const Button: FC<Props> = ({
   href,
   variant = 'primary',
   htmlButtonType = 'button',
+  isLoading = false,
   onClick,
   children,
 }) => {
@@ -41,9 +44,14 @@ const Button: FC<Props> = ({
         <button
           type={htmlButtonType}
           onClick={onClick}
-          className={`${getVariantClasses()} w-max font-medium p-4 rounded-lg`}
+          className={`${getVariantClasses()} relative w-max font-medium p-4 rounded-lg`}
         >
-          {children}
+          <div className={isLoading ? 'invisible' : ''}>{children}</div>
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <LinkIcon className="animate-spin" />
+            </div>
+          )}
         </button>
       )}
     </>
