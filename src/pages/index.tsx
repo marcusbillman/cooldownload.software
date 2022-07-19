@@ -30,6 +30,7 @@ const HomePage: NextPage = () => {
   const [selectedChallenge, setSelectedChallenge] = useState(RANDOM_CHALLENGE);
   const [selectedTheme, setSelectedTheme] = useState(THEMES[0]!);
   const [selectedSlugType, setSelectedSlugType] = useState('sketchy');
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
 
   const router = useRouter();
   const { data: session } = useSession();
@@ -42,6 +43,8 @@ const HomePage: NextPage = () => {
       toast.error(validationError);
       return;
     }
+
+    setIsCreatingLink(true);
 
     const response = await fetch('/api/links', {
       method: 'POST',
@@ -320,7 +323,9 @@ const HomePage: NextPage = () => {
                   )}
                 </div>
               </div>
-              <Button htmlButtonType="submit">Create sketchy link</Button>
+              <Button htmlButtonType="submit" isLoading={isCreatingLink}>
+                Create sketchy link
+              </Button>
             </form>
           </section>
           <section>
