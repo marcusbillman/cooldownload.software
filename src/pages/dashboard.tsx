@@ -102,7 +102,7 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                   >
                     <div className="flex items-center justify-between gap-4 p-4 border-b border-gray-200">
                       <NextLink href={`/${link.slug}`}>
-                        <a className="font-medium underline">{`cooldownload.software/${link.slug}`}</a>
+                        <a className="text-blue-500 font-medium break-all">{`cooldownload.software/${link.slug}`}</a>
                       </NextLink>
                       <div className="flex items-center gap-4">
                         <Button
