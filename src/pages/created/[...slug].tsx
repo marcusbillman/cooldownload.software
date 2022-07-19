@@ -49,9 +49,9 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
             </p>
           </section>
           <section>
-            <div className="flex gap-4 items-center justify-between bg-blue-100 p-4 pl-6 rounded-lg mb-8">
+            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center bg-blue-100 p-4 pl-6 rounded-lg mb-8">
               <NextLink href={`/${link.slug}`}>
-                <a className="text-xl md:text-2xl font-medium break-all">
+                <a className="text-lg sm:text-2xl font-medium break-all">
                   {`cooldownload.software/${link.slug}`}
                 </a>
               </NextLink>
