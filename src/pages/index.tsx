@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession, signIn } from 'next-auth/react';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -11,7 +12,10 @@ import { Link } from '@prisma/client';
 import { CHALLENGES, RANDOM_CHALLENGE, THEMES } from '../constants';
 import toast from 'react-hot-toast';
 import {
+  ArrowRight,
+  ArrowDown,
   ChevronDown,
+  HelpCircle,
   Check,
   Eye,
   EyeOff,
@@ -91,15 +95,28 @@ const HomePage: NextPage = () => {
       <main>
         <div className="container max-w-4xl flex flex-col gap-24 p-4 mx-auto">
           <section className="mt-12">
-            <h1 className="text-4xl font-bold mb-4">Make your links sketchy</h1>
-            <p>
-              Mess with your friends by sending them questionable links.
-              <br />
-              <span className="text-gray-500 italic">Example: </span>
-              <span className="text-gray-500 italic underline">
-                cooldownload.software/credit-card-loans/microsoft-supportcall.docx?Xsw6k=hg
-              </span>
-            </p>
+            <h1 className="text-4xl font-bold mb-4">
+              A really sketchy link shortener
+            </h1>
+            <p>Make any link look questionable and add janky obstacles.</p>
+            <div className="flex flex-col gap-4 items-start mt-8 sm:flex-row">
+              <NextLink href="https://youtube.com">
+                <a className="bg-gray-50 p-4 rounded-lg">youtube.com</a>
+              </NextLink>
+              <ArrowRight
+                className="text-gray-300 hidden flex-shrink-0 mt-4 sm:block"
+                aria-label="turns into"
+              />
+              <ArrowDown
+                className="text-gray-300 flex-shrink-0 ml-3 sm:hidden"
+                aria-label="turns into"
+              />
+              <NextLink href="https://cooldownload.software/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online">
+                <a className="bg-gray-50 text-blue-500 font-medium p-4 rounded-lg break-all sm:break-normal">
+                  cooldownload.software/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online
+                </a>
+              </NextLink>
+            </div>
           </section>
           <section>
             <form
@@ -125,9 +142,16 @@ const HomePage: NextPage = () => {
               </div>
               <div className="flex flex-col gap-8 sm:flex-row sm:gap-4">
                 <div className="w-full">
-                  <label htmlFor="challenge" className="block font-medium mb-2">
-                    Select challenge
-                  </label>
+                  <div className="flex items-center gap-2 mb-2">
+                    <label htmlFor="challenge" className="block font-medium">
+                      Select challenge
+                    </label>
+                    <NextLink href="#challenges">
+                      <a>
+                        <HelpCircle className="w-4 h-4 text-gray-500" />
+                      </a>
+                    </NextLink>
+                  </div>
                   <Listbox
                     name="challenge"
                     value={selectedChallenge}
@@ -290,9 +314,7 @@ const HomePage: NextPage = () => {
                         onClick={() => signIn('discord')}
                         className="text-gray-500 underline"
                       >
-                        {session
-                          ? 'View your links on the tracking page'
-                          : 'Sign in with Discord to enable'}
+                        Sign in with Discord to enable
                       </a>
                     </NextLink>
                   )}
@@ -304,8 +326,8 @@ const HomePage: NextPage = () => {
           <section>
             <h2 className="text-2xl font-semibold mb-4">Features</h2>
             <p className="mb-8">Why you should use this stupid thing.</p>
-            <ul className="flex flex-col gap-4 md:flex-row">
-              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+              <li className="flex flex-col gap-4 flex-1 border border-gray-200 p-6 rounded-lg">
                 <div className="flex items-center justify-center bg-blue-200 w-12 h-12 rounded-full">
                   <LinkIcon />
                 </div>
@@ -315,17 +337,17 @@ const HomePage: NextPage = () => {
                   Internet Explorer toolbars.
                 </p>
               </li>
-              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+              <li className="flex flex-col gap-4 flex-1 border border-gray-200 p-6 rounded-lg">
                 <div className="flex items-center justify-center bg-red-200 w-12 h-12 rounded-full">
                   <AlertOctagon />
                 </div>
-                <h3 className="font-bold">Sketchier CAPTCHAs</h3>
+                <h3 className="font-bold">Insane CAPTCHAs</h3>
                 <p>
-                  Visitors that click your link need to solve a ridiculous
-                  challenge before they are redirected.
+                  People who click your link need to complete a ridiculous
+                  challenge before being redirected.
                 </p>
               </li>
-              <li className="flex flex-col gap-4 border border-gray-200 p-6 rounded-lg">
+              <li className="flex flex-col gap-4 flex-1 border border-gray-200 p-6 rounded-lg">
                 <div className="flex items-center justify-center bg-purple-200 w-12 h-12 rounded-full">
                   <Sliders />
                 </div>
@@ -335,6 +357,32 @@ const HomePage: NextPage = () => {
                   how many people click your link.
                 </p>
               </li>
+            </ul>
+          </section>
+          <section id="challenges" className="scroll-mt-8">
+            <h2 className="text-2xl font-semibold mb-4">Challenges</h2>
+            <p className="mb-8">
+              CAPTCHAs taken to absurd heights. Visitors need to complete one
+              before they are redirected to the destination website.
+            </p>
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {CHALLENGES.map((challenge) => (
+                <li
+                  key={challenge.name}
+                  className="border border-gray-200 p-6 rounded-lg"
+                >
+                  <div className="relative aspect-square bg-gray-50 rounded-lg overflow-hidden mb-6">
+                    <Image
+                      src={challenge.demoUrl}
+                      alt="Screen recording"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
+                  <h3 className="font-bold mb-2">{challenge.friendlyName}</h3>
+                  <p>{challenge.description}</p>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
