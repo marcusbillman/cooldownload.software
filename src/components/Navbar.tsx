@@ -14,7 +14,7 @@ const Navbar: FC<Props> = () => {
   return (
     <>
       <header className="bg-white">
-        <div className="container relative min-h-[6rem] px-4 py-6 mx-auto flex items-center justify-between">
+        <div className="container relative min-h-[6rem] px-4 py-6 mx-auto flex items-center justify-between gap-4">
           <NextLink href="/">
             <a>
               <Image
@@ -25,12 +25,12 @@ const Navbar: FC<Props> = () => {
               ></Image>
             </a>
           </NextLink>
-          <nav className="flex gap-2 bg-gray-100 p-2 rounded-full">
+          <nav className="flex gap-4 sm:gap-2 sm:bg-gray-100 sm:p-2 sm:rounded-full">
             <NextLink href="/">
               <a
                 className={`${
                   router.asPath === '/' ? 'bg-white' : 'text-gray-500'
-                } font-medium px-4 py-3 rounded-full`}
+                } font-medium sm:px-4 sm:py-3 sm:rounded-full`}
               >
                 Create
               </a>
@@ -39,7 +39,7 @@ const Navbar: FC<Props> = () => {
               <a
                 className={`${
                   router.asPath === '/dashboard' ? 'bg-white' : 'text-gray-500'
-                } font-medium px-4 py-3 rounded-full`}
+                } font-medium sm:px-4 sm:py-3 sm:rounded-full`}
               >
                 Track
               </a>
