@@ -217,6 +217,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       where: {
         userEmail: session.user?.email,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     links = JSON.parse(JSON.stringify(data));
   }
