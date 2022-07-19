@@ -1,12 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../../server/db/client';
+import { prisma } from '../../../server/db/client';
 import { unstable_getServerSession as getServerSession } from 'next-auth/next';
-import { authOptions } from '../../auth/[...nextauth]';
+import { authOptions } from '../auth/[...nextauth]';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { slug } = req.query;
-  if (typeof slug !== 'string')
-    return res.status(400).json({ error: 'Slug should be a string' });
+  let slug = req.query.slug;
+  if (Array.isArray(slug)) slug = slug.join('/');
 
   if (req.method === 'GET') {
     const result = await prisma.link.findFirst({

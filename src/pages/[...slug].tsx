@@ -21,7 +21,7 @@ const ChallengePage: NextPage<Props> = ({ link, challengeToRender }) => {
   const router = useRouter();
 
   const onComplete = async () => {
-    await fetch(`/api/links/${link.slug}/completed-count`, {
+    await fetch(`/api/links/completed/${link.slug}`, {
       method: 'PUT',
     });
     router.push(link.targetUrl);
