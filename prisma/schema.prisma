@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-    provider = "mongodb"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
 model Link {
-    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    id             String   @id @default(cuid())
     targetUrl      String
     slug           String   @unique
     challenge      String   @default("random")
