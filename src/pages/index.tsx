@@ -114,9 +114,11 @@ const HomePage: NextPage = () => {
                 className="text-gray-300 flex-shrink-0 ml-3 sm:hidden"
                 aria-label="turns into"
               />
-              <NextLink href="https://cooldownload.software/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online">
+              <NextLink
+                href={`/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online`}
+              >
                 <a className="bg-gray-50 text-blue-500 font-medium p-4 rounded-lg break-all sm:break-normal">
-                  cooldownload.software/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online
+                  {`${process.env.NEXT_PUBLIC_DOMAIN}/bitcoin.fr-fast.account.docx/support-0OMBJkqyHb2.2mM-3uM2.mov.online`}
                 </a>
               </NextLink>
             </div>

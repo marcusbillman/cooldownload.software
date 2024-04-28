@@ -30,7 +30,7 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
 
   const deleteLinkBySlug = async (slug: string) => {
     const userConfirmed = confirm(
-      `Are you sure you want to delete this link?\ncooldownload.software/${slug}`
+      `Are you sure you want to delete this link?\n${process.env.NEXT_PUBLIC_DOMAIN}/${slug}`
     );
     if (!userConfirmed) return;
 
@@ -102,14 +102,14 @@ const DashboardPage: NextPage<Props> = ({ links }) => {
                   >
                     <div className="flex items-center justify-between gap-4 p-4 border-b border-gray-200">
                       <NextLink href={`/${link.slug}`}>
-                        <a className="text-blue-500 font-medium break-all">{`cooldownload.software/${link.slug}`}</a>
+                        <a className="text-blue-500 font-medium break-all">{`${process.env.NEXT_PUBLIC_DOMAIN}/${link.slug}`}</a>
                       </NextLink>
                       <div className="flex items-center gap-4">
                         <Button
                           variant="secondary"
                           onClick={() =>
                             copyToClipboard(
-                              `https://cooldownload.software/${link.slug}`
+                              `https://${process.env.NEXT_PUBLIC_DOMAIN}/${link.slug}`
                             )
                           }
                         >

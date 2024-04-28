@@ -18,7 +18,9 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
   const { data: session } = useSession();
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(`https://cooldownload.software/${link.slug}`);
+    navigator.clipboard.writeText(
+      `https://${process.env.NEXT_PUBLIC_DOMAIN}/${link.slug}`
+    );
     toast.success('Copied to clipboard!');
   };
 
@@ -52,7 +54,7 @@ const LinkCreatedPage: NextPage<Props> = ({ link }) => {
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center bg-blue-100 p-4 pl-6 rounded-lg mb-8">
               <NextLink href={`/${link.slug}`}>
                 <a className="text-lg sm:text-2xl font-medium break-all">
-                  {`cooldownload.software/${link.slug}`}
+                  {`${process.env.NEXT_PUBLIC_DOMAIN}/${link.slug}`}
                 </a>
               </NextLink>
               <Button onClick={copyToClipboard}>Copy</Button>
